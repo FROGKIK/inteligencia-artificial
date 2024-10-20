@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida a I.A</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #contenido {
+            text-align: center;
+            z-index: 1;
+            max-width: 1000px;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 4em;
+            margin: 0 0 20px 0;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            animation: pulsate 2s infinite alternate, fadeInTitle 2s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSubtitle 2s ease-out 1s forwards;
+        }
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInLinks 2s ease-out 2s forwards;
+        }
+        .link-button {
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        .link-button:hover {
+            background-color: rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        .link-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+            margin-bottom: 5px; /* Añadido para reducir el espacio */
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        @keyframes pulsate {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6); }
+        }
+        @keyframes fadeInTitle {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInSubtitle {
+            to {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInLinks {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .mensaje-final {
+            margin-top: 40px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInMessage 2s ease-out 3s forwards;
+        }
+        @keyframes fadeInMessage {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .rating-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        .rating-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8em;
+            color: #ffffff;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        .rating-button:hover {
+            opacity: 1;
+        }
+        .like-count, .dislike-count {
+            margin-left: 3px;
+        }
+        .link-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="estrellas"></canvas>
+    <div id="contenido">
+        <h1>DISFRUTA</h1>
+        <p>Espero y estas inteligencias artificiales te sean de ayuda para facilitar distintas tareas que antes eran difíciles de realizar.
+            La idea de esta página es facilitar la búsqueda de inteligencias artificiales para que no pierdas el tiempo =D</p>
+        
+        <div class="links-container">
+            <div class="link-item">
+                <a href="https://upscayl.org/" class="link-button" target="_blank">Upscayl</a>
+                <p class="link-description">Mejora la calidad de tus imágenes con IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://tiktokio.com/es/#google_vignette" class="link-button" target="_blank">TikTokio</a>
+                <p class="link-description">Crea videos de TikTok con IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://chatgpt.com/" class="link-button" target="_blank">ChatGPT</a>
+                <p class="link-description">Asistente de IA para conversación y tareas</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://ttsmaker.com/#google_vignette" class="link-button" target="_blank">TTS Maker</a>
+                <p class="link-description">Convierte texto a voz con IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://haiper.ai/onboarding" class="link-button" target="_blank">Haiper AI</a>
+                <p class="link-description">Plataforma de IA para múltiples tareas</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://www.design.com/" class="link-button" target="_blank">Design</a>
+                <p class="link-description">Herramientas de diseño asistidas por IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://venice.ai/chat" class="link-button" target="_blank">Venice AI Chat</a>
+                <p class="link-description">Chat de IA para análisis y generación de contenido</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://civitai.com/images" class="link-button" target="_blank">Civitai Images</a>
+                <p class="link-description">Galería de imágenes generadas por IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://ideogram.ai/t/my-images" class="link-button" target="_blank">Ideogram</a>
+                <p class="link-description">Genera imágenes a partir de texto con IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://suno.ai/" class="link-button" target="_blank">Suno</a>
+                <p class="link-description">Crea música con inteligencia artificial</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://app.pixverse.ai/home" class="link-button" target="_blank">Pixverse</a>
+                <p class="link-description">Crea y edita videos con IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+            <div class="link-item">
+                <a href="https://www.perplexity.ai/" class="link-button" target="_blank">Perplexity AI</a>
+                <p class="link-description">Motor de búsqueda impulsado por IA</p>
+                <div class="rating-buttons">
+                    <button class="rating-button like-button" onclick="rate(this, true)">👍 <span class="like-count">0</span></button>
+                    <button class="rating-button dislike-button" onclick="rate(this, false)">👎 <span class="dislike-count">0</span></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mensaje-final">
+            <p>Recuerda que esta pagina fue creada por alguien que no sabre programacion, si no confias en los links puedes usar un gmail menos importante o uno nuevo algunas inteligencias artificiales son para descargar, espero y pueda ayudarte =D .</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('estrellas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const estrellas = [];
+        const numeroEstrellas = 200;
+
+        for (let i = 0; i < numeroEstrellas; i++) {
+            estrellas.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radio: Math.random() * 1.5 + 0.5,
+                velocidadX: (Math.random() - 0.5) * 0.3,
+                velocidadY: (Math.random() - 0.5) * 0.3,
+                brillo: Math.random(),
+                escala: 0
+            });
+        }
+
+        let tiempoInicio = Date.now();
+
+        function animarEstrellas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const tiempoActual = Date.now();
+            const tiempoTranscurrido = tiempoActual - tiempoInicio;
+            const duracionAnimacion = 2000; // 2 segundos
+
+            estrellas.forEach(estrella => {
+                let escala = estrella.escala;
+                if (tiempoTranscurrido < duracionAnimacion) {
+                    escala = (tiempoTranscurrido / duracionAnimacion) * 1;
+                } else {
+                    escala = 1;
+                }
+
+                ctx.beginPath();
+                ctx.arc(estrella.x, estrella.y, estrella.radio * escala, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${estrella.brillo * escala})`;
+                ctx.fill();
+
+                estrella.x += estrella.velocidadX;
+                estrella.y += estrella.velocidadY;
+                estrella.brillo = Math.sin(tiempoActual * 0.001 + estrellas.indexOf(estrella)) * 0.5 + 0.5;
+
+                if (estrella.x < 0 || estrella.x > canvas.width) estrella.velocidadX *= -1;
+                if (estrella.y < 0 || estrella.y > canvas.height) estrella.velocidadY *= -1;
+            });
+
+            requestAnimationFrame(animarEstrellas);
+        }
+
+        animarEstrellas();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        function rate(button, isLike) {
+            const countSpan = button.querySelector(isLike ? '.like-count' : '.dislike-count');
+            let count = parseInt(countSpan.textContent);
+            count++;
+            countSpan.textContent = count;
+            
+            // Aquí podrías agregar código para enviar la calificación a un servidor
+            console.log(`${isLike ? 'Like' : 'Dislike'} para ${button.closest('.link-item').querySelector('.link-button').textContent}`);
+        }
+    </script>
+</body>
+</html>
